@@ -383,6 +383,5 @@ considerably from run to run.
 
 I will say that I think that the computational effort required by deep neural
 networks seems excessive to me. The time to compute the model is a proxy for
-the amount of work done. I may revise this note later to use CPU performance
-counters to get a more accurate picture of the actual amount of arithmetic
-operations used by each approach. But I think time is a decent proxy for this.
+the amount of work done, since all the methods are free to take advantage of
+all the four CPU cores in this test (and they mostly do).
