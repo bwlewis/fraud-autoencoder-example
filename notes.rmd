@@ -220,7 +220,7 @@ King and Zeng available here http://gking.harvard.edu/files/0s.pdf (King, Gary,
 and Langche Zeng. "Logistic regression in rare events data." Political analysis
 9.2 (2001): 137-163.).
 
-King and Zeng propose (computationally, not theoretically) simple remedies to
+King and Zeng propose simple (computationally, not theoretically) remedies to
 correct for imbalanced data in logistic regression. And, of course, there
 is a function (`relogit()`) in an R package (Zelig) reflecting their work!
 
