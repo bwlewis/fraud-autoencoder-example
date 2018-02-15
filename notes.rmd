@@ -340,7 +340,7 @@ time (s)   353.5010000 24.0910000 291.0490000 7.1140000 10.6610000 15.4990000
 All the methods perform admirably on these data.  Not surprisingly, they kind
 of group together! The projection/approximation error methods are quite
 similar, as are the three logistic-like approaches, although the Keras deep
-neural network classifier seems to perform a bit better on the testing subset
+neural network classifier performs better on the testing subset
 than the other two. Finally the xgboost model exhibits a ridiculously high auc
 on the training subset, but similar auc on the testing subset to the Keras
 classifier above.
