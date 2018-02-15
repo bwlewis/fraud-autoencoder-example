@@ -200,7 +200,7 @@ svd_mse_test = apply(a[!i, ], 1, crossprod) - apply(a[!i, ] %*% s0$v[, 1:N], 1, 
 
 It turns out that we can do a little better than the SVD projection above by
 using just the normal comlumn-centering to compute standard principal
-components (PCA) instead of the unusual scaling in the $a$ matrix used by the
+components (PCA) instead of the unusual scaling in the `a` matrix used by the
 Keras model.  Other than the input matrix centering/scaling, this is identical
 to the SVD model above.
 
