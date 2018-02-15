@@ -82,12 +82,12 @@ This section repeats the model in Daniel Falbe's original blog post,
 although relying on fewer external dependencies.
 
 The idea of this approach is to make a lossy projection in some subspace (that
-is, make a way to approximate the data) of only the majority `Class == 0` subset
-of the data. Then apply the projection to all the data. Because the projection
-was defined only using the majority `Class == 0` case, we expect those
-observations to be well-approximated, and the `Class == 1` observations to be
-poorly approximated by this process. Thus, some measure of error in
-reconstructing each observation determines the prediction of Class.
+is, make a way to approximate the data) of only the majority `Class == 0`
+subset of the training data subset. Then apply the projection to all the data.
+Because the projection was defined only using the majority `Class == 0` case,
+we expect those observations to be well-approximated, and the `Class == 1`
+observations to be poorly approximated by this process. Thus, some measure of
+error in reconstructing each observation determines the prediction of Class.
 
 The Keras model requires that the data are presented in (dense) matrix form,
 without the Class label.  The next section defines such a matrix creatively
