@@ -284,11 +284,11 @@ only superficial understanding, sorry. (Please improve this!)
 
 ## Gradient boosted trees
 
-Finally, let's try xgboost on this problem. Gradient boost trees are among the
-most successful (and speedy) approaches to solving generic problems like this.
-This example code assumes that you've installed the xgboost package from CRAN.
-Similarly to the Keras package, xgboost requires a matrix-like input, defined
-as the `dtrain` and `dtest` variables below.
+Finally, let's try xgboost on this problem. Gradient boosted trees are among
+the most successful (and speedy) approaches to solving generic problems like
+this.  This example code assumes that you've installed the xgboost package from
+CRAN.  Similarly to the Keras package, xgboost requires a matrix-like input,
+defined as the `dtrain` and `dtest` variables below.
 
 ```{r, eval=FALSE}
 library(xgboost)
