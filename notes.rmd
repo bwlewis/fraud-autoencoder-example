@@ -365,18 +365,21 @@ test         0.9501812  0.9517164  0.9615752   0.9830711 0.9703825 0.9710923  0.
 time (s)   146.5280000 24.6860000 24.2190000 698.7410000 6.3830000 9.1860000 15.4850000
 ```
 
-All the methods perform admirably on these data.  Not surprisingly, they kind
-of group together! The projection/approximation error methods are quite
-similar, as are the three logistic-like approaches--at least on the training
-subset.  The Keras classifier model outperforms all others on the testing
-subset (which is of course, what really matters!).  Finally the xgboost model
-exhibits a ridiculously high auc on the training subset, but slightly lower auc
-on the testing subset to the Keras classifier above.
+All the methods perform admirably on these data.  Perhaps not surprisingly,
+they kind of group together. The projection/approximation error methods are
+quite similar, as are the three logistic-like approaches--at least on the
+training subset.  The Keras classifier model outperforms all others on the
+testing subset (which is of course, what really matters!).  Finally the xgboost
+model exhibits a ridiculously high auc on the training subset, but slightly
+lower auc on the testing subset to the Keras classifier above.
 
 Please, take all these outputs with several grains of salt. I am no expert at
 tuning parameters of xgboost nor in layer engineering required of the Keras
 logistic classifier. I'm simply presenting this comparison to illustrate
-several related but distinct ways to approach this problem.
+several related but distinct ways to approach this problem. Moreover these
+results show only one data splitting and one run. In particular, I noticed that
+the Keras runs (with the same data splitting) auc output varies sometimes
+considerably from run to run.
 
 I will say that I think that the computational effort required by deep neural
 networks seems excessive to me. The time to compute the model is a proxy for
