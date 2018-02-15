@@ -196,6 +196,33 @@ svd_mse_train = anrm - apply(a[i, ] %*% s0$v[, 1:N], 1, crossprod)
 svd_mse_test = apply(a[!i, ], 1, crossprod) - apply(a[!i, ] %*% s0$v[, 1:N], 1, crossprod)
 ```
 
+## The usual PCA projection
+
+It turns out that we can do a little better than the SVD projection above by
+using just the normal comlumn-centering to compute standard principal
+components (PCA) instead of the unusual scaling in the $a$ matrix used by the
+Keras model.  Other than the input matrix centering/scaling, this is identical
+to the SVD model above.
+
+```{r, eval=FALSE}
+b = as.matrix(x[, 1:29])
+b = sweep(b, 2, apply(b[i, ], 2, mean), '-')
+tpca = system.time({
+  s0 = svd(b[i & x$Class == 0, ])
+  nrm = apply(b[i, ], 1, crossprod)  # squared row norms
+  proj = rep(0, length(nrm))  # projected squared row norms
+  s = rep(0, 20)
+  for(N in seq(20))
+  {
+    proj = proj + apply(b[i, ] %*% s0$v[, N], 1, crossprod)
+    s[N] = auc(x$Class[i], nrm - proj)
+  }
+  N = which.max(s) # best dimension for training set auc
+})
+pca_mse_train = nrm - apply(b[i, ] %*% s0$v[, 1:N], 1, crossprod)
+pca_mse_test = apply(b[!i, ], 1, crossprod) - apply(b[!i, ] %*% s0$v[, 1:N], 1, crossprod)
+```
+
 
 ## Logistic regression, abridged
 
@@ -302,9 +329,9 @@ txgb = system.time({bst=xgb.train(param, dtrain, nrounds=50, watchlist)})
 
 ## Results
 
-The notes above construct six example models falling in three broad classes.
+The notes above construct seven example models falling in three broad classes.
 
-1. The Keras autoencoder and SVD projection models evaluate approximation error to make predictions.
+1. The Keras autoencoder, SVD and PCA projection models evaluate approximation error to make predictions.
 2. R's `glm()`, Zelig's `zelig()/relogit()` and the Keras classifier are all versions of logistic regression.
 3. xgboost is a classification tree method with gradient boosting and other enhancements.
 
@@ -318,6 +345,7 @@ variable was unset, so using all four cores when possible).
 (ans = data.frame(
   keras_autoenc=c(auc(x$Class[i], mse_train), auc(x$Class[!i], mse_test), tkeras[[3]]),
   svd=c(auc(x$Class[i], svd_mse_train), auc(x$Class[!i], svd_mse_test), tsvd[[3]]),
+  pca=c(auc(x$Class[i], pca_mse_train), auc(x$Class[!i], pca_mse_test), tpca[[3]]),
   keras_class=c(auc(x$Class[i], model2_train_pred),
                 auc(x$Class[!i], model2_test_pred), tmodel2[[3]]),
   glm=c(auc(x$Class[i], glm_raw$fitted.values),
@@ -331,19 +359,19 @@ variable was unset, so using all four cores when possible).
   row.names=c("train", "test", "time (s)")))
 ```
 ```
-         keras_autoenc        svd keras_class       glm    relogit    xgboost
-train        0.9553368  0.9598296   0.9797066 0.9795944  0.9802531  0.9999994
-test         0.9500192  0.9517164   0.9799402 0.9703825  0.9710923  0.9801911
-time (s)   353.5010000 24.0910000 291.0490000 7.1140000 10.6610000 15.4990000
+         keras_autoenc        svd        pca keras_class       glm   relogit    xgboost
+train        0.9534376  0.9598296  0.9701504   0.9807703 0.9795944 0.9802531  0.9999994
+test         0.9501812  0.9517164  0.9615752   0.9830711 0.9703825 0.9710923  0.9801911
+time (s)   146.5280000 24.6860000 24.2190000 698.7410000 6.3830000 9.1860000 15.4850000
 ```
 
 All the methods perform admirably on these data.  Not surprisingly, they kind
 of group together! The projection/approximation error methods are quite
-similar, as are the three logistic-like approaches, although the Keras deep
-neural network classifier performs better on the testing subset
-than the other two. Finally the xgboost model exhibits a ridiculously high auc
-on the training subset, but similar auc on the testing subset to the Keras
-classifier above.
+similar, as are the three logistic-like approaches--at least on the training
+subset.  The Keras classifier model outperforms all others on the testing
+subset (which is of course, what really matters!).  Finally the xgboost model
+exhibits a ridiculously high auc on the training subset, but slightly lower auc
+on the testing subset to the Keras classifier above.
 
 Please, take all these outputs with several grains of salt. I am no expert at
 tuning parameters of xgboost nor in layer engineering required of the Keras
