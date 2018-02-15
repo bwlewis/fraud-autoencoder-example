@@ -111,7 +111,7 @@ post (this requires that the keras package is installed and set up
 on your system):
 ```{r, eval=FALSE}
 library(keras)
-model <- keras_model_sequential()
+model = keras_model_sequential()
 model %>%
   layer_dense(units = 15, activation = "tanh", input_shape = ncol(a)) %>%
   layer_dense(units = 10, activation = "tanh") %>%
@@ -122,7 +122,7 @@ model %>%
     optimizer = "adam"
   )
 
-early_stopping <- callback_early_stopping(patience = 5)
+early_stopping = callback_early_stopping(patience = 5)
 tkeras = system.time({model %>% fit(
   x = a[i & x$Class == 0, ], 
   y = a[i & x$Class == 0, ], 
@@ -135,10 +135,10 @@ tkeras = system.time({model %>% fit(
 
 And make predictions for the training and testing subsets using the model:
 ```{r, eval=FALSE}
-pred_train <- predict(model, a[i, ])
-mse_train <- apply((a[i, ] - pred_train)^2, 1, sum)
-pred_test <- predict(model, a[!i, ])
-mse_test <- apply((a[!i, ] - pred_test)^2, 1, sum)
+pred_train = predict(model, a[i, ])
+mse_train = apply((a[i, ] - pred_train)^2, 1, sum)
+pred_test = predict(model, a[!i, ])
+mse_test = apply((a[!i, ] - pred_test)^2, 1, sum)
 ```
 
 
@@ -251,7 +251,7 @@ into the works, but we can easily try it anyway!
 ```{r, eval=FALSE}
 tmodel2 = system.time(
 {
-model2 <- keras_model_sequential()
+model2 = keras_model_sequential()
 model2 %>%
   layer_dense(units = 15, activation = "relu", input_shape = ncol(a)) %>%
   layer_dropout(rate = 0.1) %>%
