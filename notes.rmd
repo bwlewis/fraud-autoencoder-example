@@ -94,7 +94,8 @@ without the Class label.  The next section defines such a matrix creatively
 called `a` and an indexing variable `i` that splits the data by rows into model
 training and model testing subsets. Finally, we subtract the minimum value in
 the training subset from each column and then divide by the range within each
-column in the training set to scale all values to the interval [0, 1].
+column in the training set to scale all values to the interval [0, 1] following
+the same scaling used in the original blog post.
 
 Note that the ranges and minima are defined in the training subset only. That's
 because we don't want to snoop around in the testing set, treating that when we
