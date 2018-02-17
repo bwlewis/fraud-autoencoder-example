@@ -159,8 +159,8 @@ with a projection into a truncated SVD basis. Specifically,
 
 It's literally the same idea as the Keras approach above, but with an SVD
 instead of a neural network. This idea has been around for a long time, see
-examples of it for images in Chapter 14 of "Elements of Statistical Learning" by
-Friedman, Hastie, and Tibshirani (Friedman, Jerome, Trevor Hastie, and Robert
+examples of it for images in Chapter 14 of "Elements of Statistical Learning"
+(Friedman, Jerome, Trevor Hastie, and Robert
 Tibshirani. The elements of statistical learning. Vol. 1. New York: Springer
 series in statistics, 2001.).
 
